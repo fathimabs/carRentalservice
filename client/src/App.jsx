@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import ProtectedRoute from './components/common/ProtectedRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
 
 // Simple placeholder for the Home page within the Layout
 const Home = () => {
