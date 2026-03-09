@@ -6,7 +6,7 @@ import Button from '../components/common/Button';
 
 const Login = () => {
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '', // Can be email or phone
         password: '',
     });
     const [error, setError] = useState('');
@@ -35,7 +35,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            await login(formData);
+            await login(formData); // identifier and password
             navigate('/');
         } catch (err) {
             setError(err.message || 'Login failed');
@@ -45,18 +45,18 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-140px)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F6F7F9]">
+        <div className="min-h-screen flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-[#F6F7F9]">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="text-3xl font-bold text-[#1A202C] text-center mb-2">
+                <h2 className="text-2xl sm:text-3xl font-bold text-[#1A202C] text-center mb-2">
                     Welcome Back
                 </h2>
-                <p className="text-center text-[#596780] mb-8">
+                <p className="text-center text-[#596780] mb-6 sm:mb-8 text-sm sm:text-base">
                     Login to access your Morent account.
                 </p>
             </div>
 
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-10 px-8 rounded-[10px] shadow-sm">
+                <div className="bg-white py-8 px-6 sm:py-10 sm:px-8 rounded-[10px] shadow-sm">
                     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                         {error && (
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-[10px]">
@@ -65,12 +65,11 @@ const Login = () => {
                         )}
 
                         <Input
-                            id="email"
-                            label="Email Address"
-                            type="email"
-                            placeholder="Email address"
+                            id="identifier"
+                            label="Email or Phone Number"
+                            placeholder="Email or phone number"
                             required
-                            value={formData.email}
+                            value={formData.identifier}
                             onChange={handleChange}
                         />
 
