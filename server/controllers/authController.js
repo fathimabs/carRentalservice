@@ -62,6 +62,7 @@ const loginUser = async (req, res) => {
         const { identifier, email, password } = req.body; // identifier or email can be used
 
         const loginId = identifier || email;
+        console.log("Login attempt with ID:", loginId);
 
         // Validation
         if (!loginId || !password) {
@@ -72,6 +73,9 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({
             $or: [{ email: loginId }, { phoneNumber: loginId }]
         }).select('+password');
+
+        console.log("User found in DB:", user ? "YES" : "NO");
+        if (user) console.log("User phoneNumber in DB:", user.phoneNumber);
 
         if (user && (await user.matchPassword(password))) {
             res.json({
