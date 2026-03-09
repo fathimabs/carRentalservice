@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import Button from '../common/Button';
@@ -7,11 +7,34 @@ import { SearchIcon, FilterIcon, HeartIcon, NotificationIcon, SettingsIcon } fro
 const Navbar = () => {
     const { isAuthenticated, user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const mobileDropdownRef = useRef(null);
+    const desktopDropdownRef = useRef(null);
 
     const handleLogout = () => {
+        setIsProfileOpen(false);
         logout();
         navigate('/');
     };
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const isClickInsideMobile = mobileDropdownRef.current && mobileDropdownRef.current.contains(event.target);
+            const isClickInsideDesktop = desktopDropdownRef.current && desktopDropdownRef.current.contains(event.target);
+
+            if (!isClickInsideMobile && !isClickInsideDesktop) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
+    }, []);
 
     return (
         <nav className="bg-white border-b border-[#C3D4E9] border-opacity-40 sticky top-0 z-50">
@@ -26,12 +49,32 @@ const Navbar = () => {
                         </Link>
 
                         {isAuthenticated ? (
-                            <div className="w-[28px] h-[28px] rounded-full overflow-hidden flex-shrink-0 cursor-pointer" onClick={() => navigate('/login')}>
-                                <img
-                                    src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
-                                    alt="profile"
-                                    className="w-full h-full object-cover"
-                                />
+                            <div className="relative" ref={mobileDropdownRef}>
+                                <div
+                                    className="w-[28px] h-[28px] rounded-full overflow-hidden flex-shrink-0 cursor-pointer border border-[#C3D4E9]"
+                                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                    title="Profile"
+                                >
+                                    <img
+                                        src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+                                        alt="profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                {isProfileOpen && (
+                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-[10px] shadow-lg py-1 border border-[#C3D4E9] border-opacity-40 z-50">
+                                        <div className="px-4 py-3 border-b border-[#C3D4E9] border-opacity-40">
+                                            <p className="text-sm font-bold text-[#1A202C]">{user?.name}</p>
+                                            <p className="text-xs font-medium text-[#90A3BF] truncate">{user?.email}</p>
+                                        </div>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block w-full text-left px-4 py-2 text-sm font-semibold text-red-600 hover:bg-gray-50 transition-colors"
+                                        >
+                                            Log Out
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <Link to="/login" className="text-[#3563E9] text-sm font-semibold">
@@ -95,12 +138,32 @@ const Navbar = () => {
 
                         {/* Top-Right Profile / Auth */}
                         {isAuthenticated ? (
-                            <div className="w-11 h-11 rounded-full overflow-hidden border border-[#C3D4E9] border-opacity-40 flex-shrink-0 cursor-pointer" onClick={() => navigate('/login')}>
-                                <img
-                                    src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
-                                    alt="profile"
-                                    className="w-full h-full object-cover"
-                                />
+                            <div className="relative" ref={desktopDropdownRef}>
+                                <div
+                                    className="w-11 h-11 rounded-full overflow-hidden border border-[#C3D4E9] border-opacity-40 flex-shrink-0 cursor-pointer"
+                                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                    title="Profile"
+                                >
+                                    <img
+                                        src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+                                        alt="profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                {isProfileOpen && (
+                                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-[10px] shadow-lg py-1 border border-[#C3D4E9] border-opacity-40 z-50">
+                                        <div className="px-5 py-4 border-b border-[#C3D4E9] border-opacity-40">
+                                            <p className="text-base font-bold text-[#1A202C]">{user?.name}</p>
+                                            <p className="text-sm font-medium text-[#90A3BF] truncate">{user?.email}</p>
+                                        </div>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="block w-full text-left px-5 py-3 text-sm font-semibold text-red-600 hover:bg-gray-50 transition-colors"
+                                        >
+                                            Log Out
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <div className="flex items-center gap-2">
