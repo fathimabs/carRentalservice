@@ -8,6 +8,7 @@ const Signup = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phoneNumber: '',
         password: '',
         confirmPassword: '',
     });
@@ -46,6 +47,7 @@ const Signup = () => {
             await register({
                 name: formData.name,
                 email: formData.email,
+                phoneNumber: formData.phoneNumber,
                 password: formData.password,
             });
             navigate('/');
@@ -57,18 +59,21 @@ const Signup = () => {
     };
 
     return (
-        <div className="min-h-[calc(100vh-140px)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F6F7F9]">
+        <div className="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#F6F7F9]">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="text-3xl font-bold text-[#1A202C] text-center mb-2">
+                <Link to="/" className="flex justify-center mb-8">
+                    <span className="text-[32px] font-bold text-[#3563E9] tracking-tight">MORENT</span>
+                </Link>
+                <h2 className="text-[32px] font-bold text-[#1A202C] text-center mb-2 tracking-tight">
                     Join Morent
                 </h2>
-                <p className="text-center text-[#596780] mb-8">
+                <p className="text-center text-[#90A3BF] mb-8 text-base font-medium">
                     Start your journey with the best car rental service.
                 </p>
             </div>
 
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-10 px-8 rounded-[10px] shadow-sm">
+            <div className="sm:mx-auto sm:w-full sm:max-w-[500px]">
+                <div className="bg-white py-10 px-8 rounded-[10px] shadow-sm border border-[#C3D4E9] border-opacity-40">
                     <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                         {error && (
                             <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-r-[10px]">
@@ -85,15 +90,23 @@ const Signup = () => {
                             onChange={handleChange}
                         />
 
-                        <Input
-                            id="email"
-                            label="Email Address"
-                            type="email"
-                            placeholder="Email address"
-                            required
-                            value={formData.email}
-                            onChange={handleChange}
-                        />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Input
+                                id="email"
+                                label="Email Address"
+                                type="email"
+                                placeholder="Email address"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                            <Input
+                                id="phoneNumber"
+                                label="Phone Number"
+                                placeholder="Phone number"
+                                value={formData.phoneNumber}
+                                onChange={handleChange}
+                            />
+                        </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Input
@@ -117,12 +130,12 @@ const Signup = () => {
                             />
                         </div>
 
-                        <Button type="submit" className="w-full mt-4" disabled={loading}>
+                        <Button type="submit" className="w-full mt-2 h-[56px] text-base font-bold" disabled={loading}>
                             {loading ? 'Creating account...' : 'Sign up'}
                         </Button>
 
-                        <div className="text-center mt-4">
-                            <p className="text-[#90A3BF] text-sm">
+                        <div className="text-center mt-2">
+                            <p className="text-[#90A3BF] font-medium text-sm">
                                 Already have an account?{' '}
                                 <Link to="/login" className="text-[#3563E9] font-bold hover:underline">
                                     Login

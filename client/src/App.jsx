@@ -1,25 +1,40 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ProtectedRoute from './routes/ProtectedRoute';
 
-// Temporary placeholder for the home page
-const Home = () => (
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-4xl">
-    Welcome to MORENT
-  </div>
-);
+// Simple placeholder for the Home page within the Layout
+const Home = () => {
+  return (
+    <div className="flex flex-col items-center justify-center py-20 bg-gray-50 text-center px-4">
+      <h1 className="text-3xl font-bold text-[#1A202C] mb-4">Welcome to MORENT</h1>
+      <p className="text-[#90A3BF] text-lg max-w-sm">
+        (Home page content is out of current scope)
+      </p>
+    </div>
+  );
+};
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* Protected Routes Wrapper */}
+        <Route element={<ProtectedRoute />}>
+          {/* Main Layout Wrapper for Protected Pages */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+          </Route>
         </Route>
+
+        {/* Catch all - redirect unknown routes to login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );
