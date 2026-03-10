@@ -1,83 +1,69 @@
 const Car = require("../models/carModel");
 
+//  GET /api/cars 
 
-const createCar = async (req, res) => {
-
-    try {
-        const { name, brand, pricePerDay, category, fuelType, transmission, seats, image, description } = req.body
-
-        const newCar = new Car({
-            name,
-            brand,
-            pricePerDay,
-            category,
-            fuelType,
-            transmission,
-            seats,
-            image,
-            description
-        })
-
-        const saveCar = await newCar.save()
-        res.status(201).json(saveCar)
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to create car', error: error })
-    }
-}
-
-const getAllCars = async (req, res) => {
+const getCars = async (req, res) => {
 
     try {
-        // Fetch all cars
-        const cars = await Car.find()
-        res.status(200).json(cars)
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error', error: error.message })
-    }
-}
 
+    } catch (error) {
+
+    }
+};
+
+//    GET /api/cars/:id 
 const getCarById = async (req, res) => {
 
     try {
-        const car = await Car.findById(req.params.id)
+        const car = await Car.findById(req.params.id);
         if (!car) {
-            return res.status(200).json({ message: 'Car Not Found' })
+            return res.status(404).json({ success: false, message: 'Car not found' });
         }
-        res.status(200).json(car)
+        res.status(200).json({ success: true, car });
     } catch (error) {
-        res.status(500).json({ message: 'Server Error', error: error.message })
+        res.status(500).json({ success: false, message: error.message });
     }
+};
 
-}
+//  POST /api/cars 
+const createCar = async (req, res) => {
+    try {
+        const car = await Car.create(req.body);
+        res.status(201).json({ success: true, car });
+    } catch (error) {
+        res.status(400).json({ success: false, message: error.message });
+    }
+};
 
+//  PUT /api/cars/:id 
 const updateCar = async (req, res) => {
-
     try {
-        const car = await Car.findById(req.params.id)
+        const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        });
         if (!car) {
-            return res.status(404).json({ message: 'Car Not Found' })
+            return res.status(404).json({ success: false, message: 'Car not found' });
         }
-
-        Object.assign(car, req.body)
-        const updatedCar = await car.save()
-        res.status(200).json(updatedCar)
+        res.status(200).json({ success: true, car });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to update car', error: error.message });
+        res.status(400).json({ success: false, message: error.message });
     }
-}
+};
 
+//  DELETE /api/cars/:id 
 const deleteCar = async (req, res) => {
-
     try {
-        const car = await Car.findById(req.params.id)
+        const car = await Car.findByIdAndDelete(req.params.id);
         if (!car) {
-            return res.status(404).json({ message: 'Car Not Found' })
+            return res.status(404).json({ success: false, message: 'Car not found' });
         }
-        await car, remove()
-        res.status(200).json({ message: 'Car Removed Successfully' })
+        res.status(200).json({ success: true, message: 'Car deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to delete car', error: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
-module.exports = { createCar, getAllCars, getCarById, updateCar, deleteCar }
+const getAllCars = getCars;
+
+module.exports = { getAllCars, getCarById, createCar, updateCar, deleteCar };
