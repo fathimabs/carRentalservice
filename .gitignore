@@ -6,3 +6,5 @@ dist/
 build/
 client/dist/
 server/dist/
+
+seed.js
