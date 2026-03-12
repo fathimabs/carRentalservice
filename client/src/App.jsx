@@ -3,7 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import CarList from './pages/CarList';
+import CarDetails from './pages/CarDetails';
 import ProtectedRoute from './routes/ProtectedRoute';
+import { CarProvider } from './context/CarContext';
+
 
 
 // Simple placeholder for the Home page within the Layout
@@ -22,7 +26,8 @@ function App() {
     return (
         <BrowserRouter>
             {/* CarProvider wraps everything so context is accessible across all routes */}
-           
+
+            <CarProvider>
                 <Routes>
                     {/* Public Routes */}
                     <Route path="/login" element={<Login />} />
@@ -33,13 +38,16 @@ function App() {
                         {/* Main Layout Wrapper for Protected Pages */}
                         <Route element={<MainLayout />}>
                             <Route path="/" element={<Home />} />
+                            <Route path="/cars" element={<CarList />} />
+                            <Route path="/cars/:id" element={<CarDetails />} />
                         </Route>
                     </Route>
 
                     {/* Catch all - redirect unknown routes to login */}
                     <Route path="*" element={<Navigate to="/login" replace />} />
                 </Routes>
-         
+            </CarProvider>
+
         </BrowserRouter>
     );
 }
