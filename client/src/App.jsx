@@ -4,18 +4,9 @@ import MainLayout from './components/layout/MainLayout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProtectedRoute from './routes/ProtectedRoute';
-
-// Simple placeholder for the Home page within the Layout
-const Home = () => {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 bg-gray-50 text-center px-4">
-      <h1 className="text-3xl font-bold text-[#1A202C] mb-4">Welcome to MORENT</h1>
-      <p className="text-[#90A3BF] text-lg max-w-sm">
-        (Home page content is out of current scope)
-      </p>
-    </div>
-  );
-};
+import Home from "./pages/Home"
+import Booking from "./pages/Booking"
+import MyBookings from "./pages/MyBookings"
 
 function App() {
   return (
@@ -32,7 +23,8 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
         </Route>
-
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
         {/* Catch all - redirect unknown routes to login */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
