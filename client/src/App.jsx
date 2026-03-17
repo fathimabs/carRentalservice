@@ -1,55 +1,56 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import MainLayout from './components/layout/MainLayout';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import CarList from './pages/CarList';
-import CarDetails from './pages/CarDetails';
-import ProtectedRoute from './routes/ProtectedRoute';
-import { CarProvider } from './context/CarContext';
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import MainLayout from "./components/layout/MainLayout";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
+// From develop
+import Home from "./pages/Home";
+import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
 
-// Simple placeholder for the Home page within the Layout
-// const Home = () => {
-//     return (
-//         <div className="flex flex-col items-center justify-center py-20 bg-gray-50 text-center px-4">
-//             <h1 className="text-3xl font-bold text-[#1A202C] mb-4">Welcome to MORENT</h1>
-//             <p className="text-[#90A3BF] text-lg max-w-sm">
-//                 (Home page content is out of current scope)
-//             </p>
-//         </div>
-//     );
-// };
+// From your branch
+import CarList from "./pages/CarList";
+import CarDetails from "./pages/CarDetails";
+import { CarProvider } from "./context/CarContext";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
-    return (
-        <BrowserRouter>
-            {/* CarProvider wraps everything so context is accessible across all routes */}
+  return (
+    <BrowserRouter>
+      {/* Wrap with CarProvider */}
+      <CarProvider>
+        <Routes>
 
-            <CarProvider>
-                <Routes>
-                    {/* Public Routes */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-                    {/* Protected Routes Wrapper */}
-                    <Route element={<ProtectedRoute />}>
-                        {/* Main Layout Wrapper for Protected Pages */}
-                        <Route element={<MainLayout />}>
-                            {/* <Route path="/" element={<Home />} /> */}
-                            <Route path="/cars" element={<CarList />} />
-                            <Route path="/cars/:id" element={<CarDetails />} />
-                        </Route>
-                    </Route>
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<MainLayout />}>
 
-                    {/* Catch all - redirect unknown routes to login */}
-                    <Route path="*" element={<Navigate to="/login" replace />} />
-                </Routes>
-            </CarProvider>
+              {/* Develop routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/booking" element={<Booking />} />
+              <Route path="/my-bookings" element={<MyBookings />} />
 
-        </BrowserRouter>
-    );
+              {/* Your feature routes */}
+              <Route path="/cars" element={<CarList />} />
+              <Route path="/cars/:id" element={<CarDetails />} />
+
+            </Route>
+          </Route>
+
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+
+        </Routes>
+      </CarProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;
