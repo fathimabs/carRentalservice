@@ -5,12 +5,10 @@ import MainLayout from "./components/layout/MainLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-// From develop
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
 
-// From your branch
 import CarList from "./pages/CarList";
 import CarDetails from "./pages/CarDetails";
 import { CarProvider } from "./context/CarContext";
@@ -20,7 +18,6 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 function App() {
   return (
     <BrowserRouter>
-      {/* Wrap with CarProvider */}
       <CarProvider>
         <Routes>
 
@@ -32,12 +29,10 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
 
-              {/* Develop routes */}
               <Route path="/" element={<Home />} />
               <Route path="/booking" element={<Booking />} />
               <Route path="/my-bookings" element={<MyBookings />} />
 
-              {/* Your feature routes */}
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
 
