@@ -5,9 +5,7 @@ import MainLayout from "./components/layout/MainLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-import Home from "./pages/Home";
-import Booking from "./pages/Booking";
-import MyBookings from "./pages/MyBookings";
+
 
 import CarList from "./pages/CarList";
 import CarDetails from "./pages/CarDetails";
@@ -29,10 +27,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
 
-              <Route path="/" element={<Home />} />
-              <Route path="/booking" element={<Booking />} />
-              <Route path="/my-bookings" element={<MyBookings />} />
-
+             
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
 
