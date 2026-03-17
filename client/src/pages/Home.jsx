@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-import React from "react";
 
-function Home() {
-  return <div>Home Page</div>;
-}
-
-export default Home;
-=======
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import PickupDropoff from "../components/ui/PickupDropoff"
@@ -90,4 +82,3 @@ function Home() {
 }
 
 export default Home
->>>>>>> 015526ada60395b7179ae38440cc1f13630680c2

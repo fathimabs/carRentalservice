@@ -3,16 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 
 import MainLayout from "./components/layout/MainLayout";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-
-import MainLayout from "./components/layout/MainLayout";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Home from "./pages/Home";
-import Booking from "./pages/Booking";
-import MyBookings from "./pages/MyBookings";
-
 
 import CarList from "./pages/CarList";
 import CarDetails from "./pages/CarDetails";
