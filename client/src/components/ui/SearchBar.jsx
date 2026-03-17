@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SearchIcon, FilterIcon } from '../common/Icons'
+import { useCar } from '../../context/CarContext';
 
 const SearchBar = ({ placeholder = 'Search something here', onFilterClick }) => {
     const { filters, setFilters } = useCar();

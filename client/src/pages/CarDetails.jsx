@@ -271,4 +271,4 @@ const CarDetails = () => {
     );
 };
 
-export default CarDetails;
+export default CarDetails
