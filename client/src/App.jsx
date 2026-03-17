@@ -6,10 +6,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 
-
 import CarList from "./pages/CarList";
 import CarDetails from "./pages/CarDetails";
 import { CarProvider } from "./context/CarContext";
+
+
+import Home from "./pages/Home";
+import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -27,7 +31,12 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
 
-             
+              {/* Home + Booking */}
+              <Route path="/" element={<Home />} />
+              <Route path="/booking" element={<Booking />} />
+              <Route path="/my-bookings" element={<MyBookings />} />
+
+              {/* Car Features */}
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
 
