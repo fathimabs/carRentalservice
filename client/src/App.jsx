@@ -52,30 +52,6 @@ function App() {
         </Routes>
       </CarProvider>
 
-
-      <Routes>
-
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route element={<MainLayout />}>
-
-            <Route path="/" element={<Home />} />
-            <Route path="/booking" element={<Booking />} />
-            <Route path="/my-bookings" element={<MyBookings />} />
-
-          </Route>
-        </Route>
-
-        {/* Catch all */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-
-      </Routes>
-
-
     </BrowserRouter>
   );
 }
