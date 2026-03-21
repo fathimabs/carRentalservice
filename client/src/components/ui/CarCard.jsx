@@ -1,38 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
-import { HeartIcon } from '../common/Icons';
+import { HeartIcon, StarIcon, PersonIcon, GearIcon, GasIcon } from '../common/Icons';
 
 
-const GearIcon = ({ className = 'w-4 h-4' }) => (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="3" strokeWidth="1.5" />
-        <path strokeLinecap="round" strokeWidth="1.5"
-            d="M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-    </svg>
-);
-
-const PersonIcon = ({ className = 'w-4 h-4' }) => (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
-            d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" strokeWidth="1.5" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
-            d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-);
-
-const StarIcon = ({ filled }) => (
-    <svg width="12" height="12" viewBox="0 0 24 24"
-        fill={filled ? '#FBAD39' : 'none'} stroke="#FBAD39" strokeWidth="2">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-);
-
-// ─── Component ───
 const CarCard = ({ car, onFavoriteToggle }) => {
+
     const navigate = useNavigate();
     const [isFav, setIsFav] = useState(car?.isFavorite || false);
+    const [imgError, setImgError] = useState(false);
 
     const handleFavorite = (e) => {
         e.stopPropagation();
@@ -50,85 +26,92 @@ const CarCard = ({ car, onFavoriteToggle }) => {
     if (!car) return null;
 
     return (
-        <div className="bg-white rounded-2xl p-6 flex flex-col justify-between 
-                  shadow-[0_4px_24px_rgba(0,0,0,0.04)] 
-                  hover:shadow-[0_6px_30px_rgba(0,0,0,0.08)] transition">
+        <div className="bg-white rounded-[20px] p-4 sm:p-5 flex flex-col gap-4 sm:gap-5
+                        hover:shadow-lg transition-shadow duration-300 h-full">
 
-            {/* HEADER */}
+            {/* ── Header ── */}
             <div className="flex justify-between items-start">
-                <div>
-                    <h3 className="text-[#1A202C] font-semibold text-[16px] leading-tight">
+                <div className="flex-1 min-w-0 pr-2">
+                    <h3 className="text-[#1A202C] font-bold text-sm sm:text-base leading-tight truncate">
                         {car.name}
                     </h3>
-                    <p className="text-[#90A3BF] text-[13px] mt-1">
-                        {car.category}
-                    </p>
+                    <p className="text-[#90A3BF] text-xs font-medium mt-0.5">{car.category}</p>
                 </div>
 
                 <button
                     onClick={handleFavorite}
-                    className="p-1"
+                    className="flex-shrink-0 p-1 rounded-full transition-colors hover:bg-red-50"
+                    aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
                 >
                     <HeartIcon
-                        className={`w-5 h-5 ${isFav ? "text-red-500" : "text-[#90A3BF]"
+                        className={`w-5 h-5 transition-colors ${isFav ? 'text-red-500' : 'text-[#90A3BF]'
                             }`}
                     />
                 </button>
             </div>
 
-            <div className="relative flex items-end justify-center h-[120px] mt-4">
+            {/* ── Car Image ── */}
+            <div className="relative flex items-center justify-center h-[100px] sm:h-[120px] w-full overflow-hidden">
                 <img
-                    src={car.image}
+                    src={imgError ? 'https://www.pngall.com/wp-content/uploads/13/2022/04/Tesla-Model-3-PNG.png' : (car.image || '')}
                     alt={car.name}
-                    className={`max-h-[70px] w-auto object-contain ${car.flip ? "scale-x-[-1]" : ""
-                        }`}
+                    className="object-contain h-full w-full drop-shadow-md transition-transform
+                               duration-300 hover:scale-105"
+                    onError={() => setImgError(true)}
                 />
 
-                <div className="absolute bottom-2 w-[60%] h-[8px] bg-black/10 blur-md rounded-full" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-3
+                                bg-black/10 blur-md rounded-full" />
             </div>
 
-            {/* SPECS */}
-            <div className="flex justify-between items-center mt-4 text-[#90A3BF] text-[12px] font-medium">
-
-                <div className="flex items-center gap-1">
-                    <GasIcon className="w-[14px] h-[14px]" />
-                    <span>{car.gasoline}L</span>
+            {/* ── Specs ── */}
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[#90A3BF]">
+                    <GasIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="text-[11px] sm:text-xs font-medium">{car.gasoline}L</span>
                 </div>
-
-                <div className="flex items-center gap-1">
-                    <GearIcon className="w-[14px] h-[14px]" />
-                    <span>{car.transmission}</span>
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[#90A3BF]">
+                    <GearIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="text-[11px] sm:text-xs font-medium">{car.transmission}</span>
                 </div>
-
-                <div className="flex items-center gap-1">
-                    <PersonIcon className="w-[14px] h-[14px]" />
-                    <span>{car.capacity} People</span>
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[#90A3BF]">
+                    <PersonIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span className="text-[11px] sm:text-xs font-medium">{car.capacity} People</span>
                 </div>
 
             </div>
 
-            {/* PRICE + BUTTON */}
-            <div className="flex justify-between items-center mt-5">
-
+            {/* Price */}
+            <div className="flex items-center justify-between mt-auto">
                 <div>
-                    <div className="flex items-baseline gap-1">
-                        <span className="text-[#1A202C] font-bold text-[18px]">
-                            ${car.pricePerDay}.00
+                    {/* Current price */}
+                    <div className="flex items-baseline gap-0.5">
+                        <span className="text-[#1A202C] font-bold text-base sm:text-lg">
+                            ${car.pricePerDay}/
                         </span>
-                        <span className="text-[#90A3BF] text-[13px]">/day</span>
+                        <span className="text-[#90A3BF] text-xs sm:text-sm font-medium">day</span>
                     </div>
-
-                    {car.oldPrice && (
-                        <p className="text-[#90A3BF] text-[12px] line-through mt-1">
-                            ${car.oldPrice}.00
+                    {/* Strikethrough original price */}
+                    {car.originalPrice && (
+                        <p className="text-[#90A3BF] text-xs font-medium line-through">
+                            ${car.originalPrice}.00
                         </p>
+                    )}
+                    {/* rating */}
+                    {car.rating > 0 && (
+                        <div className="flex items-center gap-0.5 mt-1">
+                            {renderStars(car.rating)}
+                            <span className="text-[#90A3BF] text-[10px] sm:text-xs ml-0.5">
+                                ({car.reviewCount})
+                            </span>
+                        </div>
                     )}
                 </div>
 
-                <button
+                <Button
                     onClick={handleRentNow}
-                    className="bg-blue-600 hover:bg-blue-700 text-white 
-                   px-5 py-2 rounded-lg text-[13px] font-medium"
+                    variant="primary"
+                    className="h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm flex-shrink-0"
                 >
                     Rent Now
                 </button>

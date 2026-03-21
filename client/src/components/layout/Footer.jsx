@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -7,7 +8,9 @@ const Footer = () => {
                 <div className="flex flex-col lg:flex-row justify-between pb-8 md:pb-16 border-b border-[#131313] border-opacity-10 gap-12 lg:gap-0">
                     {/* Left Section: Logo & Vision */}
                     <div className="max-w-[292px]">
-                        <h2 className="text-2xl md:text-3xl font-bold text-[#3563E9] tracking-tight mb-4">MORENT</h2>
+                        <Link to="/">
+                            <h2 className="text-2xl md:text-3xl font-bold text-[#3563E9] tracking-tight mb-4 inline-block">MORENT</h2>
+                        </Link>
                         <p className="text-[#131313]/60 font-medium leading-[150%] text-xs md:text-base pr-4 md:pr-0">
                             Our vision is to provide convenience and help increase your sales business.
                         </p>
