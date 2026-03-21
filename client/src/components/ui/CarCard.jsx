@@ -37,6 +37,7 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                     </h3>
                     <p className="text-[#90A3BF] text-xs font-medium mt-0.5">{car.category}</p>
                 </div>
+
                 <button
                     onClick={handleFavorite}
                     className="flex-shrink-0 p-1 rounded-full transition-colors hover:bg-red-50"
@@ -77,6 +78,7 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                     <PersonIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span className="text-[11px] sm:text-xs font-medium">{car.capacity} People</span>
                 </div>
+
             </div>
 
             {/* Price */}
@@ -112,8 +114,10 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                     className="h-8 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm flex-shrink-0"
                 >
                     Rent Now
-                </Button>
+                </button>
+
             </div>
+
         </div>
     );
 };
