@@ -86,6 +86,10 @@ const carSchema = new mongoose.Schema(
             type: String,
             default: ''
         },
+        flip: {
+            type: Boolean,
+            default: false
+        },
     },
     { timestamps: true }
 );
