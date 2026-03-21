@@ -24,31 +24,45 @@ const CarCard = ({ car, onFavoriteToggle }) => {
   if (!car) return null;
 
   return (
-    <div className="bg-white rounded-[20px] p-4 sm:p-5 flex flex-col gap-4 sm:gap-5 hover:shadow-lg transition-shadow duration-300 h-full">
-
-      {/* Header */}
+    <div
+      className="
+        bg-white
+        w-[317px]
+        h-[388px]
+        rounded-[10px]
+        p-5
+        flex flex-col
+        gap-5
+        flex-shrink-0
+        hover:shadow-lg
+        transition-shadow duration-300
+      "
+    >
+      {/* ── Header ── */}
       <div className="flex justify-between items-start">
         <div className="flex-1 min-w-0 pr-2">
-          <h3 className="text-[#1A202C] font-bold text-sm sm:text-base truncate">
+          <h3 className="text-[#1A202C] font-bold text-base leading-tight truncate">
             {car.name}
           </h3>
-          <p className="text-[#90A3BF] text-xs font-medium mt-0.5">
+          <p className="text-[#90A3BF] text-xs font-medium mt-1">
             {car.category}
           </p>
         </div>
 
         <button
           onClick={handleFavorite}
-          className="p-1 rounded-full hover:bg-red-50"
+          className="flex-shrink-0 p-1 rounded-full hover:bg-red-50 transition-colors"
         >
           <HeartIcon
-            className={`w-5 h-5 ${isFav ? 'text-red-500' : 'text-[#90A3BF]'}`}
+            className={`w-5 h-5 ${
+              isFav ? 'text-red-500' : 'text-[#90A3BF]'
+            }`}
           />
         </button>
       </div>
 
-      {/* Image */}
-      <div className="relative flex items-center justify-center h-[110px] sm:h-[120px] w-full">
+      {/* ── Car Image ── */}
+      <div className="relative flex items-center justify-center h-[120px] w-full">
         <img
           src={
             imgError
@@ -56,48 +70,56 @@ const CarCard = ({ car, onFavoriteToggle }) => {
               : car.image || ''
           }
           alt={car.name}
-          className="object-contain h-full w-full hover:scale-105 transition-transform"
+          className="object-contain h-full w-full transition-transform duration-300 hover:scale-105"
           onError={() => setImgError(true)}
         />
-        <div className="absolute bottom-0 w-3/4 h-3 bg-black/10 blur-md rounded-full" />
+
+        {/* shadow */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-3 bg-black/10 blur-md rounded-full" />
       </div>
 
-      {/* Specs */}
-      <div className="flex justify-between text-[#90A3BF]">
+      {/* ── Specs ── */}
+      <div className="flex items-center justify-between text-[#90A3BF]">
         <div className="flex items-center gap-1">
           <GasIcon className="w-4 h-4" />
-          <span className="text-xs">{car.gasoline}L</span>
+          <span className="text-xs font-medium">{car.gasoline}L</span>
         </div>
+
         <div className="flex items-center gap-1">
           <GearIcon className="w-4 h-4" />
-          <span className="text-xs">{car.transmission}</span>
+          <span className="text-xs font-medium">{car.transmission}</span>
         </div>
+
         <div className="flex items-center gap-1">
           <PersonIcon className="w-4 h-4" />
-          <span className="text-xs">{car.capacity} People</span>
+          <span className="text-xs font-medium">
+            {car.capacity} People
+          </span>
         </div>
       </div>
 
-      {/* Price + Button */}
-      <div className="flex justify-between items-center mt-auto">
+      {/* ── Price + Button ── */}
+      <div className="flex items-center justify-between mt-auto">
         <div>
           <div className="flex items-baseline gap-1">
-            <span className="font-bold text-[#1A202C] text-base sm:text-lg">
+            <span className="text-[#1A202C] font-bold text-lg">
               ${car.pricePerDay}/
             </span>
-            <span className="text-[#90A3BF] text-sm">day</span>
+            <span className="text-[#90A3BF] text-sm font-medium">
+              day
+            </span>
           </div>
 
           {car.originalPrice && (
-            <p className="text-xs text-[#90A3BF] line-through">
-              ${car.originalPrice}
+            <p className="text-[#90A3BF] text-xs line-through">
+              ${car.originalPrice}.00
             </p>
           )}
 
           {car.rating > 0 && (
             <div className="flex items-center gap-1 mt-1">
               {renderStars(car.rating)}
-              <span className="text-xs text-[#90A3BF]">
+              <span className="text-[#90A3BF] text-xs">
                 ({car.reviewCount})
               </span>
             </div>
@@ -107,7 +129,16 @@ const CarCard = ({ car, onFavoriteToggle }) => {
         <Button
           onClick={handleRentNow}
           variant="primary"
-          className="px-3 sm:px-4 h-9 text-sm"
+          className="
+            px-4 py-2
+            font-['Plus_Jakarta_Sans']
+            font-semibold
+            text-[16px]
+            leading-[150%]
+            tracking-[-0.02em]
+            text-center
+            flex items-center justify-center
+          "
         >
           Rent Now
         </Button>
