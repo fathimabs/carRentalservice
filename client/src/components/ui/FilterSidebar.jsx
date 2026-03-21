@@ -5,7 +5,9 @@ const CATEGORIES = ['Sport', 'SUV', 'MPV', 'Sedan', 'Coupe', 'Hatchback'];
 const CAPACITIES = [
     { label: '2 Person', value: '2' },
     { label: '4 Person', value: '4' },
+    { label: '5 Person', value: '5' },
     { label: '6 Person', value: '6' },
+     { label: '7 Person', value: '7' },
     { label: '8 or More', value: '8' },
 ];
 

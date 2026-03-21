@@ -65,3 +65,13 @@ export const StarIcon = ({ filled }) => (
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
 );
+
+export const SpecRow = ({ label, value, icon }) => (
+    <div className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0">
+        <span className="text-[#90A3BF] text-sm">{label}</span>
+        <div className="flex items-center gap-2">
+            {icon}
+            <span className="text-sm font-semibold text-[#1A202C]">{value}</span>
+        </div>
+    </div>
+);
