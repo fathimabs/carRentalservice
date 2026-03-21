@@ -8,8 +8,10 @@ function Booking() {
     const [pickupLocation, setPickupLocation] = useState("")
     const [pickupDate, setPickupDate] = useState("")
     const [dropoffDate, setDropoffDate] = useState("")
-    const navigate = useNavigate()
     const [dropoffLocation, setDropoffLocation] = useState("")
+
+    const navigate = useNavigate()
+
     const handleBooking = async () => {
         try {
 
@@ -27,8 +29,9 @@ function Booking() {
             setPickupLocation("")
             setPickupDate("")
             setDropoffDate("")
+            setDropoffLocation("")
 
-            navigate("/my-bookings")
+            navigate("/checkout")
 
         } catch (error) {
             console.error("Booking failed", error)
@@ -36,37 +39,35 @@ function Booking() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
 
-            <div className="bg-white p-6 md:p-10 shadow-lg rounded-xl">
+        <div className="max-w-7xl mx-auto px-6 py-10">
 
-                <h1 className="text-2xl md:text-3xl font-bold mb-8">
-                    Book Your Car
-                </h1>
+            <h1 className="text-3xl font-bold mb-10">
+                Book Your Car
+            </h1>
 
-                <PickupDropoff
-                    pickupLocation={pickupLocation}
-                    setPickupLocation={setPickupLocation}
-                    dropoffLocation={dropoffLocation}
-                    setDropoffLocation={setDropoffLocation}
-                    pickupDate={pickupDate}
-                    setPickupDate={setPickupDate}
-                    dropoffDate={dropoffDate}
-                    setDropoffDate={setDropoffDate}
-                />
+            <PickupDropoff
+                pickupLocation={pickupLocation}
+                setPickupLocation={setPickupLocation}
+                dropoffLocation={dropoffLocation}
+                setDropoffLocation={setDropoffLocation}
+                pickupDate={pickupDate}
+                setPickupDate={setPickupDate}
+                dropoffDate={dropoffDate}
+                setDropoffDate={setDropoffDate}
+            />
 
-                <div className="flex justify-center mt-8">
-                    <button
-                        onClick={handleBooking}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition"
-                    >
-                        Confirm Booking
-                    </button>
-                </div>
-
+            <div className="flex justify-center mt-10">
+                <button
+                    onClick={handleBooking}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition"
+                >
+                    Confirm Booking
+                </button>
             </div>
 
         </div>
+
     )
 }
 

@@ -3,13 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import { HeartIcon } from '../common/Icons';
 
-const GasIcon = ({ className = 'w-4 h-4' }) => (
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
-            d="M3 22V8l9-6 9 6v14M10 22V16h4v6" />
-        <circle cx="14" cy="10" r="1.5" fill="currentColor" />
-    </svg>
-);
 
 const GearIcon = ({ className = 'w-4 h-4' }) => (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,79 +50,91 @@ const CarCard = ({ car, onFavoriteToggle }) => {
     if (!car) return null;
 
     return (
-        <div className="bg-white rounded-[20px] p-5 flex flex-col gap-5 hover:shadow-lg transition-shadow duration-300">
-            {/* ── Header ── */}
+        <div className="bg-white rounded-2xl p-6 flex flex-col justify-between 
+                  shadow-[0_4px_24px_rgba(0,0,0,0.04)] 
+                  hover:shadow-[0_6px_30px_rgba(0,0,0,0.08)] transition">
+
+            {/* HEADER */}
             <div className="flex justify-between items-start">
                 <div>
-                    <h3 className="text-[#1A202C] font-bold text-base leading-tight">{car.name}</h3>
-                    <p className="text-[#90A3BF] text-xs font-medium mt-0.5">{car.category}</p>
+                    <h3 className="text-[#1A202C] font-semibold text-[16px] leading-tight">
+                        {car.name}
+                    </h3>
+                    <p className="text-[#90A3BF] text-[13px] mt-1">
+                        {car.category}
+                    </p>
                 </div>
+
                 <button
                     onClick={handleFavorite}
-                    className="p-1 rounded-full transition-colors hover:bg-red-50"
-                    aria-label={isFav ? 'Remove from favourites' : 'Add to favourites'}
+                    className="p-1"
                 >
                     <HeartIcon
-                        className={`w-5 h-5 transition-colors ${
-                            isFav ? 'text-red-500' : 'text-[#90A3BF]'
-                        }`}
+                        className={`w-5 h-5 ${isFav ? "text-red-500" : "text-[#90A3BF]"
+                            }`}
                     />
                 </button>
             </div>
 
-            {/* ── Car Image ── */}
-            <div className="relative flex items-center justify-center h-[120px]">
+            <div className="relative flex items-end justify-center h-[120px] mt-4">
                 <img
-                    src={car.image || '/placeholder-car.png'}
+                    src={car.image}
                     alt={car.name}
-                    className="object-contain h-full w-full drop-shadow-md"
-                    onError={(e) => {
-                        e.target.src =
-                            'https://www.pngall.com/wp-content/uploads/13/2022/04/Tesla-Model-3-PNG.png';
-                    }}
+                    className={`max-h-[70px] w-auto object-contain ${car.flip ? "scale-x-[-1]" : ""
+                        }`}
                 />
-                {/* subtle shadow under car */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-3 bg-black/10 blur-md rounded-full" />
+
+                <div className="absolute bottom-2 w-[60%] h-[8px] bg-black/10 blur-md rounded-full" />
             </div>
 
-            {/* ── Specs ── */}
-            <div className="flex justify-between items-center">
-                <div className="flex items-center gap-1.5 text-[#90A3BF]">
-                    <GasIcon />
-                    <span className="text-xs font-medium">{car.gasoline}L</span>
+            {/* SPECS */}
+            <div className="flex justify-between items-center mt-4 text-[#90A3BF] text-[12px] font-medium">
+
+                <div className="flex items-center gap-1">
+                    <GasIcon className="w-[14px] h-[14px]" />
+                    <span>{car.gasoline}L</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[#90A3BF]">
-                    <GearIcon />
-                    <span className="text-xs font-medium">{car.transmission}</span>
+
+                <div className="flex items-center gap-1">
+                    <GearIcon className="w-[14px] h-[14px]" />
+                    <span>{car.transmission}</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[#90A3BF]">
-                    <PersonIcon />
-                    <span className="text-xs font-medium">{car.capacity} People</span>
+
+                <div className="flex items-center gap-1">
+                    <PersonIcon className="w-[14px] h-[14px]" />
+                    <span>{car.capacity} People</span>
                 </div>
+
             </div>
 
-            {/*  Price */}
-            <div className="flex items-center justify-between">
+            {/* PRICE + BUTTON */}
+            <div className="flex justify-between items-center mt-5">
+
                 <div>
-                    <div className="flex items-baseline gap-0.5">
-                        <span className="text-[#1A202C] font-bold text-lg">${car.pricePerDay}/</span>
-                        <span className="text-[#90A3BF] text-sm font-medium">day</span>
+                    <div className="flex items-baseline gap-1">
+                        <span className="text-[#1A202C] font-bold text-[18px]">
+                            ${car.pricePerDay}.00
+                        </span>
+                        <span className="text-[#90A3BF] text-[13px]">/day</span>
                     </div>
-                    {car.rating > 0 && (
-                        <div className="flex items-center gap-1 mt-1">
-                            {renderStars(car.rating)}
-                            <span className="text-[#90A3BF] text-xs ml-0.5">({car.reviewCount})</span>
-                        </div>
+
+                    {car.oldPrice && (
+                        <p className="text-[#90A3BF] text-[12px] line-through mt-1">
+                            ${car.oldPrice}.00
+                        </p>
                     )}
                 </div>
-                <Button
+
+                <button
                     onClick={handleRentNow}
-                    variant="primary"
-                    className="h-9 px-4 text-sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white 
+                   px-5 py-2 rounded-lg text-[13px] font-medium"
                 >
                     Rent Now
-                </Button>
+                </button>
+
             </div>
+
         </div>
     );
 };
