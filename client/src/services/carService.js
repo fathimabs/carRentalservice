@@ -1,6 +1,6 @@
 import api from './api';
 
-// Fetch all cars — supports filters, sort, pagination via params object
+// Fetch all cars — supports filters, sort, pagination via params 
 export const fetchCars = async (params = {}) => {
     const response = await api.get('/cars', { params });
     return response.data; // { success, total, page, totalPages, cars }

@@ -1,37 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { useCar } from '../context/CarContext';
-import CarCard from '../components/ui/CarCard';
-import FilterSidebar from '../components/ui/FilterSidebar';
-import PickupDropoff from '../components/ui/PickupDropoff';
-import { FilterIcon } from '../components/common/Icons';
-import Button from "../components/common/Button";
+import React, { useEffect, useState } from 'react'
+import { useCar } from '../context/CarContext'
+import CarCard from '../components/ui/CarCard'
+import FilterSidebar from '../components/ui/FilterSidebar'
+import PickupDropoff from '../components/ui/PickupDropoff'
+import { FilterIcon } from '../components/common/Icons'
+import Button from '../components/common/Button'
 
 const CarList = () => {
-    const { cars = [], loading, error, total, filters, loadCars } = useCar();
+    
+    const { cars = [], loading, error, total, filters, loadCars } = useCar()
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [visibleCount, setVisibleCount] = useState(9);
-    const [pickupLocation, setPickupLocation] = useState('');
-    const [pickupDate, setPickupDate] = useState('');
-    const [dropoffDate, setDropoffDate] = useState('');
-
-    useEffect(() => {
-        setVisibleCount(9);
-    }, [filters]);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const [visibleCount, setVisibleCount] = useState(8)
+    const [pickupLocation, setPickupLocation] = useState('')
+    const [pickupDate, setPickupDate] = useState('')
+    const [dropoffDate, setDropoffDate] = useState('')
 
     useEffect(() => {
-        loadCars({ ...filters, limit: 100 });
+        setVisibleCount(8)
+    }, [filters])
+
+    useEffect(() => {
+        loadCars({ ...filters, limit: 100 })
     }, [filters]);
 
-    const visibleCars = cars.slice(0, visibleCount);
-    const hasMore = visibleCount < cars.length;
+    const visibleCars = cars.slice(0, visibleCount)
+    const hasMore = visibleCount < cars.length
+
+    const handleShowMore = () => {
+
+        const next = visibleCount + 8
+        setVisibleCount(next >= cars.length ? cars.length : next)
+    };
 
     return (
         <div className="min-h-screen bg-[#F6F7F9]">
+            <div className="flex items-stretch">
 
-            <div className="px-4 sm:px-6 py-6 flex gap-8 items-stretch">
-
-                {/* Sidebar */}
+                {/* Mobile View */}
                 {isSidebarOpen && (
                     <div
                         className="fixed inset-0 bg-black/40 z-40 lg:hidden"
@@ -39,23 +45,24 @@ const CarList = () => {
                     />
                 )}
 
+                {/* Sidebar */}
                 <aside className={`
                     fixed top-0 left-0 h-full w-[260px] z-50 bg-white shadow-xl
-                    overflow-y-auto pt-6 pb-10 px-5 transition-transform duration-300
+                    overflow-y-auto transition-transform duration-300
                     lg:static lg:translate-x-0 lg:shadow-none lg:bg-white
                     lg:z-auto lg:overflow-visible lg:flex-shrink-0 lg:w-[260px]
                     lg:self-stretch lg:h-auto lg:min-h-full
                     ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}>
-                    <div className="flex justify-between items-center mb-5 lg:hidden">
+                    <div className="flex justify-between items-center mb-5 lg:hidden px-4 pt-4">
                         <span className="text-[#1A202C] font-bold">Filters</span>
                         <button onClick={() => setIsSidebarOpen(false)}>✕</button>
                     </div>
                     <FilterSidebar />
                 </aside>
 
-                {/* Right Content */}
-                <div className="flex-1 min-w-0 flex flex-col gap-6">
+                {/* Main content */}
+                <div className="flex-1 min-w-0 flex flex-col gap-6 px-4 sm:px-6 py-6">
 
                     {/* Pickup & Dropoff */}
                     <PickupDropoff
@@ -67,7 +74,7 @@ const CarList = () => {
                         setDropoffDate={setDropoffDate}
                     />
 
-                    {/* Mobile Filter Button */}
+                    {/* Mobile filter button */}
                     <div className="flex justify-end">
                         <button
                             onClick={() => setIsSidebarOpen(true)}
@@ -107,39 +114,25 @@ const CarList = () => {
                         </div>
                     )}
 
-                    {/* 🚗 CAR GRID (FINAL FIX) */}
+                    {/* Car grid */}
                     {!loading && !error && cars.length > 0 && (
                         <>
-                            <div className="
-                                w-full
-                                grid
-                                grid-cols-1
-                                sm:grid-cols-2
-                                lg:grid-cols-3
-                                gap-6
-                            ">
+                            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
                                 {visibleCars.map((car) => (
                                     <CarCard key={car._id} car={car} />
                                 ))}
                             </div>
 
-                            {/* Show More */}
+                            {/* Show more */}
                             <div className="relative flex items-center justify-center pt-6 border-t border-[#C3D4E9]/40">
-
                                 {hasMore ? (
-                                    <button onClick={() => setVisibleCount((prev) => prev + 9)}>
-                                        <Button>Show more car</Button>
-                                    </button>
+                                    <Button onClick={handleShowMore}>Show more car</Button>
                                 ) : (
-                                    <span className="text-[#90A3BF] text-sm">
-                                        All cars shown
-                                    </span>
+                                    <span className="text-[#90A3BF] text-sm">All cars shown</span>
                                 )}
-
                                 <span className="absolute right-0 text-[#90A3BF] text-sm">
                                     {visibleCars.length} of {total} cars
                                 </span>
-
                             </div>
                         </>
                     )}
