@@ -23,7 +23,6 @@ const CarDetails = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     useEffect(() => {
-
         loadCarById(id)
         loadCars({ limit: 8 })
 
@@ -48,6 +47,7 @@ const CarDetails = () => {
     }
 
     if (error || !car) {
+        
         return (
             <div className="min-h-screen bg-[#F6F7F9] flex flex-col items-center justify-center gap-4 px-4">
                 <p className="text-[#596780] font-semibold">{error || "Car not found"}</p>

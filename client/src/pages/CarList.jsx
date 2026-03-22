@@ -21,6 +21,7 @@ const CarList = () => {
     }, [filters])
 
     useEffect(() => {
+
         loadCars({ ...filters, limit: 100 })
     }, [filters]);
 
@@ -34,6 +35,7 @@ const CarList = () => {
     };
 
     return (
+
         <div className="min-h-screen bg-[#F6F7F9]">
             <div className="flex items-stretch">
 
@@ -45,7 +47,7 @@ const CarList = () => {
                     />
                 )}
 
-                {/* Sidebar */}
+                {/* Filter Sidebar */}
                 <aside className={`
                     fixed top-0 left-0 h-full w-[260px] z-50 bg-white shadow-xl
                     overflow-y-auto transition-transform duration-300
