@@ -90,6 +90,16 @@ const carSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    reviews: [
+        {
+            name: { type: String },
+            role: { type: String },
+            avatar: { type: String },
+            rating: { type: Number },
+            comment: { type: String },
+            date: { type: String },
+        }
+    ],
 },
     { timestamps: true }
 );

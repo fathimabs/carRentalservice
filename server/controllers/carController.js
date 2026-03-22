@@ -1,4 +1,4 @@
-const Car = require("../models/carModel");
+const Car = require("../models/carModel")
 
 //  GET /api/cars by filter
 
@@ -21,12 +21,12 @@ const getCars = async (req, res) => {
         }
         if (category) filter.category = category
 
-        if (capacity) filter.capacity = { $gte: Number(capacity) }
+        if (capacity) filter.capacity = Number(capacity) 
 
         if (minPrice || maxPrice) {
             filter.pricePerDay = {}
             if (minPrice) filter.pricePerDay.$gte = Number(minPrice)
-            if (maxPrice) filter.pricePerDay.$lte = Number(maxPrice);
+            if (maxPrice) filter.pricePerDay.$lte = Number(maxPrice)
         }
         //sorting
 
@@ -44,10 +44,10 @@ const getCars = async (req, res) => {
 
         const total = await Car.countDocuments(filter)
 
-        res.status(200).json({ success: true, total, cars });
+        res.status(200).json({ success: true, total, cars })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message })
     }
 };
 
@@ -55,23 +55,23 @@ const getCars = async (req, res) => {
 const getCarById = async (req, res) => {
 
     try {
-        const car = await Car.findById(req.params.id);
+        const car = await Car.findById(req.params.id)
         if (!car) {
-            return res.status(404).json({ success: false, message: 'Car not found' });
+            return res.status(404).json({ success: false, message: 'Car not found' })
         }
-        res.status(200).json({ success: true, car });
+        res.status(200).json({ success: true, car })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message })
     }
 };
 
 //  POST /api/cars 
 const createCar = async (req, res) => {
     try {
-        const car = await Car.create(req.body);
-        res.status(201).json({ success: true, car });
+        const car = await Car.create(req.body)
+        res.status(201).json({ success: true, car })
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        res.status(400).json({ success: false, message: error.message })
     }
 };
 
@@ -83,27 +83,27 @@ const updateCar = async (req, res) => {
             runValidators: true,
         });
         if (!car) {
-            return res.status(404).json({ success: false, message: 'Car not found' });
+            return res.status(404).json({ success: false, message: 'Car not found' })
         }
-        res.status(200).json({ success: true, car });
+        res.status(200).json({ success: true, car })
     } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
+        res.status(400).json({ success: false, message: error.message })
     }
 };
 
 //  DELETE /api/cars/:id 
 const deleteCar = async (req, res) => {
     try {
-        const car = await Car.findByIdAndDelete(req.params.id);
+        const car = await Car.findByIdAndDelete(req.params.id)
         if (!car) {
-            return res.status(404).json({ success: false, message: 'Car not found' });
+            return res.status(404).json({ success: false, message: 'Car not found' })
         }
-        res.status(200).json({ success: true, message: 'Car deleted successfully' });
+        res.status(200).json({ success: true, message: 'Car deleted successfully' })
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message })
     }
 };
 
 const getAllCars = getCars;
 
-module.exports = { getAllCars, getCarById, createCar, updateCar, deleteCar };
+module.exports = { getAllCars, getCarById, createCar, updateCar, deleteCar }

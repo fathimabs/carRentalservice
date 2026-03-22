@@ -37,7 +37,7 @@ function Home() {
   }, []);
 
   const handleSearch = () => {
-    navigate("/booking");
+    navigate("/cars");
   };
 
   return (
