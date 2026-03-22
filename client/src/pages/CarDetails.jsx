@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import Button from "../components/common/Button"
 import { useCar } from "../context/CarContext"
-import { HeartIcon,StarIcon,SpecRow } from "../components/common/Icons"
+import { HeartIcon, StarIcon, SpecRow } from "../components/common/Icons"
 import FilterSidebar from "../components/ui/FilterSidebar"
 import CarCard from "../components/ui/CarCard"
 import ReviewCard from "../components/ui/ReviewCard"
@@ -47,7 +47,7 @@ const CarDetails = () => {
     }
 
     if (error || !car) {
-        
+
         return (
             <div className="min-h-screen bg-[#F6F7F9] flex flex-col items-center justify-center gap-4 px-4">
                 <p className="text-[#596780] font-semibold">{error || "Car not found"}</p>
@@ -67,7 +67,7 @@ const CarDetails = () => {
             {isSidebarOpen && (
                 <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setIsSidebarOpen(false)} />
             )}
-            
+
             <aside className={`
                 fixed top-0 left-0 h-full w-[260px] z-50 bg-white shadow-xl
                 overflow-y-auto pt-6 pb-10 px-5 transition-transform duration-300
@@ -168,7 +168,7 @@ const CarDetails = () => {
                                 variant="primary"
                                 onClick={() => navigate(`/booking/${car._id}`)}
                                 disabled={!car.isAvailable}
-                                className="h-[44px] px-6"
+                                className="w-[116px] h-[44px] px-5 rounded-[4px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-white"
                             >
                                 Rent Now
                             </Button>
@@ -180,7 +180,7 @@ const CarDetails = () => {
                 <div className="bg-white rounded-[10px] p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                         <h2 className="text-[#1A202C] font-bold text-xl">Reviews</h2>
-                        <span className="bg-[#3563E9] text-white text-sm font-bold px-3 py-1 rounded-full">
+                        <span className="bg-[#3563E9] text-white text-sm font-semibold w-[44px] h-[28px] rounded-[4px] px-5 flex items-center justify-center">
                             {reviews.length}
                         </span>
                     </div>

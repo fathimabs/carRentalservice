@@ -26,8 +26,8 @@ const CarCard = ({ car, onFavoriteToggle }) => {
 
     return (
 
-       <div className="bg-white w-[317px] h-[388px] rounded-[10px] p-5 flex flex-col gap-5 flex-shrink-0 hover:shadow-lg transition-shadow duration-300">
-           
+        <div className="bg-white w-[317px] h-[388px] rounded-[10px] p-5 flex flex-col gap-5 flex-shrink-0 hover:shadow-lg transition-shadow duration-300">
+
             {/* Header */}
             <div className="flex justify-between items-start">
                 <div className="flex-1 min-w-0 pr-2">
@@ -83,11 +83,11 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                         </div>
                     )}
                 </div>
-                
+
                 <Button
                     onClick={handleRentNow}
                     variant="primary"
-                    className="px-4 py-2 font-semibold text-[16px] flex items-center justify-center"
+                    className="w-[116px] h-[44px] px-5 rounded-[4px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-white"
                 >
                     Rent Now
                 </Button>

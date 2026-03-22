@@ -7,7 +7,7 @@ import { FilterIcon } from '../components/common/Icons'
 import Button from '../components/common/Button'
 
 const CarList = () => {
-    
+
     const { cars = [], loading, error, total, filters, loadCars } = useCar()
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -128,7 +128,13 @@ const CarList = () => {
                             {/* Show more */}
                             <div className="relative flex items-center justify-center pt-6 border-t border-[#C3D4E9]/40">
                                 {hasMore ? (
-                                    <Button onClick={handleShowMore}>Show more car</Button>
+                                    <Button
+                                        onClick={handleShowMore}
+                                        variant="primary"
+                                        className="text-[16px] font-semibold leading-[150%] tracking-[-0.02em] border-none text-[#596780] hover:text-[#3563E9]"
+                                    >
+                                        Show more car
+                                    </Button>
                                 ) : (
                                     <span className="text-[#90A3BF] text-sm">All cars shown</span>
                                 )}

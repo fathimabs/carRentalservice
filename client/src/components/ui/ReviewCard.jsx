@@ -1,5 +1,5 @@
 import React from 'react';
-import StarIcon from '../common/Icons/StarIcon'
+import { StarIcon } from '../common/Icons'
 
 const ReviewCard = ({ name, role, date, rating, comment, avatar }) => {
     const renderStars = (rating) =>
@@ -19,7 +19,7 @@ const ReviewCard = ({ name, role, date, rating, comment, avatar }) => {
                     <img
                         src={avatar || `https://ui-avatars.com/api/?name=${name}`}
                         alt={name}
-                        className="w-11 h-11 rounded-full object-cover"/>
+                        className="w-11 h-11 rounded-full object-cover" />
                     <div>
                         <p className="text-[#1A202C] font-semibold text-sm">{name}</p>
                         <p className="text-[#90A3BF] text-xs">{role}</p>
