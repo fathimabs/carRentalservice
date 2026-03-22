@@ -2,30 +2,34 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../common/Button'
 import { HeartIcon, StarIcon, PersonIcon, GearIcon, GasIcon } from '../common/Icons'
+import { useCar } from '../../context/CarContext'
 
-const CarCard = ({ car, onFavoriteToggle }) => {
+const CarCard = ({ car }) => {
 
     const navigate = useNavigate()
-    const [isFav, setIsFav] = useState(car?.isFavorite || false)
+    const { toggleFavourite, favourites } = useCar()
+
+    const [isFav, setIsFav] = useState(
+        favourites.some(f => f._id === car?._id) || car?.isFavorite || false
+    )
     const [imgError, setImgError] = useState(false)
 
     const handleFavorite = (e) => {
         e.stopPropagation()
         setIsFav((prev) => !prev)
-        onFavoriteToggle?.(car._id, !isFav)
-    };
+        toggleFavourite(car)
+    }
 
     const handleRentNow = () => navigate(`/cars/${car._id}`)
 
     const renderStars = (rating) =>
         Array.from({ length: 5 }, (_, i) => (
             <StarIcon key={i} filled={i < Math.round(rating)} />
-        ));
+        ))
 
     if (!car) return null
 
     return (
-
         <div className="bg-white w-[317px] h-[388px] rounded-[10px] p-5 flex flex-col gap-5 flex-shrink-0 hover:shadow-lg transition-shadow duration-300">
 
             {/* Header */}
@@ -83,7 +87,6 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                         </div>
                     )}
                 </div>
-
                 <Button
                     onClick={handleRentNow}
                     variant="primary"
@@ -93,7 +96,7 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                 </Button>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CarCard;
+export default CarCard

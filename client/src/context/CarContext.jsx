@@ -4,16 +4,18 @@ import { fetchCars, fetchCarById } from '../services/carService'
 export const CarContext = createContext()
 
 const CAR_ACTIONS = {
-    FETCH_START:        'FETCH_START',
+    FETCH_START: 'FETCH_START',
     FETCH_CARS_SUCCESS: 'FETCH_CARS_SUCCESS',
-    FETCH_CAR_SUCCESS:  'FETCH_CAR_SUCCESS',
-    FETCH_ERROR:        'FETCH_ERROR',
-    SET_FILTERS:        'SET_FILTERS',
-    RESET_FILTERS:      'RESET_FILTERS',
-    SET_PAGE:           'SET_PAGE',
-    SET_SORT:           'SET_SORT',
-    CLEAR_SELECTED:     'CLEAR_SELECTED',
+    FETCH_CAR_SUCCESS: 'FETCH_CAR_SUCCESS',
+    FETCH_ERROR: 'FETCH_ERROR',
+    SET_FILTERS: 'SET_FILTERS',
+    RESET_FILTERS: 'RESET_FILTERS',
+    SET_PAGE: 'SET_PAGE',
+    SET_SORT: 'SET_SORT',
+    CLEAR_SELECTED: 'CLEAR_SELECTED',
+    TOGGLE_FAVOURITE: 'TOGGLE_FAVOURITE'
 };
+const savedFavourites = JSON.parse(localStorage.getItem('favourites') || '[]')
 
 const initialState = {
     cars: [],
@@ -32,6 +34,7 @@ const initialState = {
         maxPrice: '',
         capacity: '',
     },
+    favourites: savedFavourites,
     sort: 'createdAt',
     order: 'desc',
 };
@@ -69,6 +72,15 @@ const carReducer = (state, action) => {
 
         case CAR_ACTIONS.SET_SORT:
             return { ...state, sort: action.payload.sort, order: action.payload.order }
+
+        case CAR_ACTIONS.TOGGLE_FAVOURITE: {
+            const exists = state.favourites.find(c => c._id === action.payload._id);
+            const updated = exists
+                ? state.favourites.filter(c => c._id !== action.payload._id)
+                : [...state.favourites, action.payload];
+            localStorage.setItem('favourites', JSON.stringify(updated));
+            return { ...state, favourites: updated };
+        }
 
         case CAR_ACTIONS.CLEAR_SELECTED:
             return { ...state, selectedCar: null }
@@ -112,7 +124,8 @@ export const CarProvider = ({ children }) => {
             });
         }
     };
-
+    const toggleFavourite = (car) =>
+        dispatch({ type: CAR_ACTIONS.TOGGLE_FAVOURITE, payload: car });
     const setFilters = (filters) =>
         dispatch({ type: CAR_ACTIONS.SET_FILTERS, payload: filters })
 
@@ -136,14 +149,14 @@ export const CarProvider = ({ children }) => {
         resetFilters,
         setPage,
         setSort,
-        clearSelectedCar,
+        clearSelectedCar, toggleFavourite
     };
 
     return <CarContext.Provider value={value}>{children}</CarContext.Provider>
 };
 
 export const useCar = () => {
-    
+
     const context = useContext(CarContext)
     if (!context) throw new Error('useCar must be used within a CarProvider')
     return context;

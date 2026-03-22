@@ -3,13 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import Button from '../common/Button';
 import { SearchIcon, FilterIcon, HeartIcon, NotificationIcon, SettingsIcon } from '../common/Icons';
-
+import { useCar } from '../../context/CarContext'
 const Navbar = () => {
     const { isAuthenticated, user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const mobileDropdownRef = useRef(null);
     const desktopDropdownRef = useRef(null);
+    const { favourites } = useCar();
 
     const handleLogout = () => {
         setIsProfileOpen(false);
@@ -124,8 +125,17 @@ const Navbar = () => {
                     <div className="flex items-center gap-4">
                         {/* Desktop Icons */}
                         <div className="flex items-center gap-3">
-                            <div className="p-2 border border-[#C3D4E9] border-opacity-40 rounded-full cursor-pointer hover:bg-gray-50 text-[#596780]">
+                           
+                            <div
+                                onClick={() => navigate('/favourites')}
+                                className="relative p-2 border border-[#C3D4E9] border-opacity-40 rounded-full cursor-pointer hover:bg-gray-50 text-[#596780]"
+                            >
                                 <HeartIcon className="w-5 h-5" />
+                                {favourites.length > 0 && (
+                                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#FF4423] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                        {favourites.length}
+                                    </span>
+                                )}
                             </div>
                             <div className="relative p-2 border border-[#C3D4E9] border-opacity-40 rounded-full cursor-pointer hover:bg-gray-50 text-[#596780]">
                                 <NotificationIcon className="w-5 h-5" />
