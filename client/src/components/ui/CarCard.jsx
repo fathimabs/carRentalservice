@@ -80,12 +80,7 @@ const CarCard = ({ car }) => {
                     {car.originalPrice && (
                         <p className="text-[#90A3BF] text-xs line-through">${car.originalPrice}.00</p>
                     )}
-                    {car.rating > 0 && (
-                        <div className="flex items-center gap-1 mt-1">
-                            {renderStars(car.rating)}
-                            <span className="text-[#90A3BF] text-xs">({car.reviewCount})</span>
-                        </div>
-                    )}
+                   
                 </div>
                 <Button
                     onClick={handleRentNow}
