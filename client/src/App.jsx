@@ -19,6 +19,7 @@ import Checkout from "./pages/Checkout";
 
 
 import ProtectedRoute from "./routes/ProtectedRoute";
+import Favourites from "./pages/Favourites";
 
 function App() {
   return (
@@ -43,7 +44,7 @@ function App() {
               {/* Car Features */}
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
-
+              <Route path="/favourites" element={<Favourites />} />
             </Route>
           </Route>
 
