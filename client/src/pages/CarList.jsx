@@ -21,9 +21,12 @@ const CarList = () => {
     }, [filters])
 
     useEffect(() => {
-
         loadCars({ ...filters, limit: 100 })
-    }, [filters]);
+    }, [filters])
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [])
 
     const visibleCars = cars.slice(0, visibleCount)
     const hasMore = visibleCount < cars.length
