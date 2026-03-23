@@ -51,14 +51,13 @@ const CarList = () => {
                 )}
 
                 {/* Filter Sidebar */}
-                <aside className={`
-                    fixed top-0 left-0 h-full w-[260px] z-50 bg-white shadow-xl
+                <aside className={`fixed top-0 left-0 h-full w-[260px] z-50 bg-white shadow-xl
                     overflow-y-auto transition-transform duration-300
                     lg:static lg:translate-x-0 lg:shadow-none lg:bg-white
                     lg:z-auto lg:overflow-visible lg:flex-shrink-0 lg:w-[260px]
                     lg:self-stretch lg:h-auto lg:min-h-full
-                    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-                `}>
+                    ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                        
                     <div className="flex justify-between items-center mb-5 lg:hidden px-4 pt-4">
                         <span className="text-[#1A202C] font-bold">Filters</span>
                         <button onClick={() => setIsSidebarOpen(false)}>✕</button>
@@ -77,6 +76,7 @@ const CarList = () => {
                         setPickupDate={setPickupDate}
                         dropoffDate={dropoffDate}
                         setDropoffDate={setDropoffDate}
+                        floatingSwap={true}   
                     />
 
                     {/* Mobile filter button */}

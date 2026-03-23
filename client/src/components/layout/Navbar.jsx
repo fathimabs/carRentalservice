@@ -11,23 +11,29 @@ const Navbar = () => {
     const { setFilters, favourites } = useCar();
     const navigate = useNavigate();
 
+
     const [searchValue, setSearchValue] = useState('');
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+
     const mobileDropdownRef = useRef(null);
     const desktopDropdownRef = useRef(null);
 
+    // Logout handler
     const handleLogout = () => {
         setIsProfileOpen(false);
         logout();
         navigate('/');
     };
 
+    // Search handler
     const handleSearch = (e) => {
         e.preventDefault();
         if (!searchValue.trim()) return;
         setFilters({ search: searchValue.trim() });
         navigate('/cars');
     };
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -49,9 +55,10 @@ const Navbar = () => {
         <nav className="bg-white border-b border-[#C3D4E966] sticky top-0 z-50">
             <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-4">
 
-                {/* ================= MOBILE ================= */}
+                {/* MOBILE LAYOUT  */}
                 <div className="flex flex-col gap-4 py-4 md:hidden">
 
+                    {/* Logo and profile */}
                     <div className="flex items-center justify-between">
                         <Link to="/">
                             <span className="text-[24px] font-bold text-[#3563E9]">MORENT</span>
@@ -76,7 +83,10 @@ const Navbar = () => {
                                             <p className="text-sm font-semibold">{user?.name}</p>
                                             <p className="text-xs text-gray-500">{user?.email}</p>
                                         </div>
-                                        <button onClick={handleLogout} className="w-full text-left px-3 py-2 text-red-500 hover:bg-red-50">
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left px-3 py-2 text-red-500 hover:bg-red-50"
+                                        >
                                             Logout
                                         </button>
                                     </div>
@@ -89,6 +99,7 @@ const Navbar = () => {
                         )}
                     </div>
 
+                    {/* Search bar with filter button */}
                     <div className="flex gap-3">
                         <form
                             onSubmit={handleSearch}
@@ -110,26 +121,21 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* ================= DESKTOP ================= */}
+                {/* DESKTOP LAYOUT  */}
                 <div className="hidden md:flex items-center justify-between h-[124px]">
-
-                    {/* LEFT GROUP */}
+                    {/* LEFT GROUP: Logo + Search */}
                     <div className="flex items-center gap-8">
-
-                        {/* Logo */}
                         <Link to="/">
                             <span className="text-[32px] font-bold text-[#3563E9] tracking-[-0.03em]">
                                 MORENT
                             </span>
                         </Link>
 
-                        {/* Search (FIXED SIZE) */}
                         <form
                             onSubmit={handleSearch}
                             className="w-[492px] h-[44px] flex items-center px-4 border border-[#C3D4E966] rounded-full focus-within:ring-2 focus-within:ring-[#3563E9]"
                         >
                             <SearchIcon className="w-5 h-5 text-[#596780]" />
-
                             <input
                                 type="text"
                                 value={searchValue}
@@ -140,18 +146,16 @@ const Navbar = () => {
                                 placeholder="Search something here"
                                 className="ml-3 w-full outline-none text-sm"
                             />
-
                             <FilterIcon className="w-5 h-5 text-[#596780]" />
                         </form>
                     </div>
 
-
-                    {/* RIGHT */}
+                    {/* Icons + Profile */}
                     <div className="flex items-center gap-4">
-
                         <div className="flex items-center gap-3">
+
+                            {/* Favourites icon  */}
                             <div
-                                onClick={() => navigate('/favourites')}
                                 className="relative w-[44px] h-[44px] flex items-center justify-center border border-[#C3D4E966] rounded-full cursor-pointer"
                             >
                                 <HeartIcon className="w-5 h-5 text-[#596780]" />
@@ -162,11 +166,13 @@ const Navbar = () => {
                                 )}
                             </div>
 
+                            {/* Notification icon */}
                             <div className="relative w-[44px] h-[44px] flex items-center justify-center border border-[#C3D4E966] rounded-full">
                                 <NotificationIcon className="w-5 h-5 text-[#596780]" />
                                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                             </div>
 
+                            {/* Settings icon */}
                             <div className="w-[44px] h-[44px] flex items-center justify-center border border-[#C3D4E966] rounded-full">
                                 <SettingsIcon className="w-5 h-5 text-[#596780]" />
                             </div>
@@ -191,7 +197,10 @@ const Navbar = () => {
                                             <p className="text-sm font-bold">{user?.name}</p>
                                             <p className="text-xs text-gray-500">{user?.email}</p>
                                         </div>
-                                        <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-red-500 hover:bg-red-50">
+                                        <button
+                                            onClick={handleLogout}
+                                            className="w-full text-left px-4 py-3 text-red-500 hover:bg-red-50"
+                                        >
                                             Logout
                                         </button>
                                     </div>
@@ -209,7 +218,6 @@ const Navbar = () => {
                         )}
                     </div>
                 </div>
-
             </div>
         </nav>
     );
