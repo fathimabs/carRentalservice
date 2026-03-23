@@ -40,6 +40,8 @@ function App() {
               <Route path="/booking" element={<Booking />} />
               <Route path="/my-bookings" element={<MyBookings />} />
 
+              <Route path="/checkout/:id" element={<Checkout />} />
+
               {/* Car Features */}
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
