@@ -18,7 +18,6 @@ import MyBookings from "./pages/MyBookings";
 import Checkout from "./pages/Checkout";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Favourites from "./pages/Favourites";
 import SessionTimeoutHandler from "./components/common/SessionTimeoutHandler";
 
 function App() {
@@ -46,7 +45,7 @@ function App() {
               {/* Car Features */}
               <Route path="/cars" element={<CarList />} />
               <Route path="/cars/:id" element={<CarDetails />} />
-              <Route path="/favourites" element={<Favourites />} />
+             
             </Route>
           </Route>
 

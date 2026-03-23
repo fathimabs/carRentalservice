@@ -4,7 +4,6 @@ import CarCard from "../components/ui/CarCard";
 import PickupDropoff from "../components/ui/PickupDropoff";
 import car1 from "../assets/car1.png";
 import car2 from "../assets/car2.png";
-import Button from "../components/common/Button"
 
 function Home() {
   const navigate = useNavigate();
@@ -45,102 +44,102 @@ function Home() {
 
   return (
     <div className="w-full px-6 lg:px-12 py-10">
-
+      {/* Two card layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
-
         {/* LEFT CARD */}
-        <div className="relative h-[320px] rounded-2xl overflow-hidden bg-gradient-to-r from-blue-400 to-blue-500 flex items-center px-10">
-
-          {/* TEXT */}
-          <div className="z-10 max-w-[280px] text-white">
-            <h2 className="text-[26px] font-semibold leading-snug mb-4">
-              The Best Platform for Car Rental
-            </h2>
-
-            <p className="text-[14px] opacity-90 mb-6 leading-relaxed">
-              Ease of doing a car rental safely and reliably. Of course at a low price.
-            </p>
-
+        <div className="relative rounded-[10px] overflow-hidden bg-[#3563E9] h-[360px] flex items-center px-10">
+          {/* Text container – matches your exact dimensions */}
+          <div className="w-[284px] h-[224px] flex flex-col justify-between">
+            <div>
+              <h2
+                className="text-white font-semibold leading-[150%] tracking-[-0.03em] mb-4"
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "32px",
+                  width: "272px",
+                  height: "96px",
+                }}
+              >
+                The Best Platform for Car Rental
+              </h2>
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
+                Ease of doing a car rental safely and reliably. Of course at a low price.
+              </p>
+            </div>
             <button
               onClick={() => navigate("/cars")}
-              className="bg-blue-700 px-6 py-2 rounded-lg text-sm"
+              className="bg-blue-700 px-6 py-2 rounded-lg text-sm text-white hover:bg-blue-800 transition-colors w-fit"
             >
               Rental Car
             </button>
           </div>
-
-          {/* CAR IMAGE */}
+          {/* Car image */}
           <img
             src={car1}
             alt="car"
-            className="absolute right-6 bottom-0 w-[380px] object-contain"
+            className="absolute right-0 bottom-0 w-[380px] object-contain pointer-events-none"
           />
         </div>
 
-
         {/* RIGHT CARD */}
-        <div className="relative h-[320px] rounded-2xl overflow-hidden bg-gradient-to-r from-blue-600 to-blue-800 flex items-center px-10">
-
-          {/* TEXT */}
-          <div className="z-10 max-w-[280px] text-white">
-            <h2 className="text-[26px] font-semibold leading-snug mb-4">
-              Easy way to rent a car at a low price
-            </h2>
-
-            <p className="text-[14px] opacity-90 mb-6 leading-relaxed">
-              Providing cheap car rental services and safe and comfortable facilities.
-            </p>
-
+        <div className="relative rounded-[10px] overflow-hidden bg-[#3563E9] h-[360px] flex items-center px-10">
+          <div className="w-[284px] h-[224px] flex flex-col justify-between">
+            <div>
+              <h2
+                className="text-white font-semibold leading-[150%] tracking-[-0.03em] mb-4"
+                style={{
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  fontSize: "32px",
+                  width: "272px",
+                  height: "96px",
+                }}
+              >
+                Easy way to rent a car at a low price
+              </h2>
+              <p className="text-white/90 text-sm leading-relaxed mb-6">
+                Providing cheap car rental services and safe and comfortable facilities.
+              </p>
+            </div>
             <button
               onClick={() => navigate("/cars")}
-              className="bg-blue-400 px-6 py-2 rounded-lg text-sm"
+              className="bg-blue-400 px-6 py-2 rounded-lg text-sm text-white hover:bg-blue-500 transition-colors w-fit"
             >
               Rental Car
             </button>
           </div>
-
-          {/* CAR IMAGE */}
           <img
             src={car2}
             alt="car"
-            className="absolute  right-7 bottom-0 w-[360px] object-contain scale-x-[-1]"
+            className="absolute right-0 bottom-0 w-[360px] object-contain scale-x-[-1] pointer-events-none"
           />
         </div>
-
       </div>
+
       {/* PICKUP / DROPOFF */}
-
-        {/* ✅ CALL HERE */}
-        <PickupDropoff
-          pickupLocation={pickupLocation}
-          setPickupLocation={setPickupLocation}
-          dropoffLocation={dropoffLocation}
-          setDropoffLocation={setDropoffLocation}
-          pickupDate={pickupDate}
-          setPickupDate={setPickupDate}
-          dropoffDate={dropoffDate}
-          setDropoffDate={setDropoffDate}
-          pickupTime={pickupTime}
-          setPickupTime={setPickupTime}
-          dropoffTime={dropoffTime}
-          setDropoffTime={setDropoffTime}
-        />
-
-      
+      <PickupDropoff
+        pickupLocation={pickupLocation}
+        setPickupLocation={setPickupLocation}
+        dropoffLocation={dropoffLocation}
+        setDropoffLocation={setDropoffLocation}
+        pickupDate={pickupDate}
+        setPickupDate={setPickupDate}
+        dropoffDate={dropoffDate}
+        setDropoffDate={setDropoffDate}
+        pickupTime={pickupTime}
+        setPickupTime={setPickupTime}
+        dropoffTime={dropoffTime}
+        setDropoffTime={setDropoffTime}
+      />
 
       {/* CAR LIST */}
       {loading ? (
         <p className="text-center mt-10">Loading...</p>
       ) : (
         <div className="mt-12 space-y-10">
-
           {/* POPULAR */}
           <div>
             <div className="flex justify-between mb-6">
-              <h2 className="text-[#90A3BF] text-sm font-semibold">
-                Popular Car
-              </h2>
-
+              <h2 className="text-[#90A3BF] text-sm font-semibold">Popular Car</h2>
               <span
                 onClick={() => navigate("/cars")}
                 className="text-blue-500 text-sm cursor-pointer"
@@ -148,7 +147,6 @@ function Home() {
                 View All
               </span>
             </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {popularCars.map((car) => (
                 <CarCard key={car._id} car={car} />
@@ -161,14 +159,12 @@ function Home() {
             <h2 className="text-[#90A3BF] text-sm font-semibold mb-6">
               Recommendation Car
             </h2>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {recommendedCars.map((car) => (
                 <CarCard key={car._id} car={car} />
               ))}
             </div>
           </div>
-
         </div>
       )}
 
@@ -181,7 +177,6 @@ function Home() {
           Show more car
         </button>
       </div>
-
     </div>
   );
 }
