@@ -149,6 +149,11 @@ const Navbar = () => {
                                 className="relative p-2 border border-[#C3D4E9] border-opacity-40 rounded-full cursor-pointer hover:bg-gray-50 text-[#596780]"
                             >
                                 <HeartIcon className="w-5 h-5" />
+                                {favourites.length > 0 && (
+                                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#FF4423] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                        {favourites.length}
+                                    </span>
+                                )}
                             </div>
 
                             <div className="relative p-2 border border-[#C3D4E9] border-opacity-40 rounded-full cursor-pointer hover:bg-gray-50 text-[#596780]">
