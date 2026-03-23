@@ -117,12 +117,10 @@ const CarCard = ({ car, onFavoriteToggle }) => {
                         </span>
                         <span className="text-[#90A3BF] text-[13px]">/day</span>
                     </div>
-
-                    {car.oldPrice && (
-                        <p className="text-[#90A3BF] text-[12px] line-through mt-1">
-                            ${car.oldPrice}.00
-                        </p>
+                    {car.originalPrice && (
+                        <p className="text-[#90A3BF] text-xs line-through">${car.originalPrice}.00</p>
                     )}
+                   
                 </div>
 
                 <button
