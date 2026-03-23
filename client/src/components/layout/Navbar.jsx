@@ -30,28 +30,99 @@ const Navbar = () => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target) &&
-                desktopDropdownRef.current && !desktopDropdownRef.current.contains(event.target)) {
+            const isClickInsideMobile = mobileDropdownRef.current && mobileDropdownRef.current.contains(event.target);
+            const isClickInsideDesktop = desktopDropdownRef.current && desktopDropdownRef.current.contains(event.target);
+
+            if (!isClickInsideMobile && !isClickInsideDesktop) {
                 setIsProfileOpen(false);
             }
         };
+
         document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
     }, []);
 
     return (
         <nav className="bg-white border-b border-[#C3D4E9] border-opacity-40 sticky top-0 z-50 h-auto md:h-[124px] flex items-center">
-            <div className="max-w-[1440px] w-full mx-auto px-4 md:px-8 py-5 md:py-0">
-                
-                {/* Desktop & Tablet Layout */}
-                <div className="flex items-center justify-between gap-4 h-full">
+            <div className="max-w-[1440px] w-full mx-auto px-6 py-6 pb-8 md:py-0">
+
+                {/* --- MOBILE LAYOUT (Two-Row) --- */}
+                <div className="flex flex-col gap-8 md:hidden">
+                    {/* Top Row: Logo & Profile */}
+                    <div className="flex items-center justify-between">
+                        <Link to="/" className="flex-shrink-0 flex items-center">
+                            <span className="text-[24px] font-bold text-[#3563E9] leading-[150%] tracking-[-0.03em] font-['Plus_Jakarta_Sans']">MORENT</span>
+                        </Link>
+
+                        {isAuthenticated ? (
+                            <div className="relative" ref={mobileDropdownRef}>
+                                <div
+                                    className="w-11 h-11 rounded-full overflow-hidden flex-shrink-0 cursor-pointer border border-[#C3D4E9] border-opacity-40"
+                                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                >
+                                    <img
+                                        src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`}
+                                        alt="profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                {isProfileOpen && (
+                                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl py-2 border border-[#C3D4E9] border-opacity-40 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                                        <div className="px-5 py-3 border-b border-[#C3D4E9] border-opacity-40">
+                                            <p className="text-sm font-bold text-[#1A202C]">{user?.name}</p>
+                                            <p className="text-xs font-medium text-[#90A3BF] truncate">{user?.email}</p>
+                                        </div>
+                                        <button 
+                                            onClick={handleLogout} 
+                                            className="block w-full text-left px-5 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
+                                        >
+                                            Log Out
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <Link to="/login" className="text-[#3563E9] text-sm font-bold">Log In</Link>
+                        )}
+                    </div>
+
+                    {/* Bottom Row: Search & Filter */}
+                    <div className="flex items-center gap-4">
+                        <form
+                            onSubmit={handleSearch}
+                            className="flex-grow flex items-center h-[48px] px-6 rounded-[10px] border border-[#C3D4E9] border-opacity-40 bg-white focus-within:ring-2 focus-within:ring-[#3563E9]"
+                        >
+                            <SearchIcon className="w-6 h-6 text-[#596780] mr-3" />
+                            <input
+                                type="text"
+                                value={searchValue}
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                    if (e.target.value === '') setFilters({ search: '' });
+                                }}
+                                placeholder="Search something here"
+                                className="w-full bg-transparent border-none outline-none text-[#596780] text-sm font-medium placeholder-[#596780]"
+                            />
+                        </form>
+                        <div className="w-[48px] h-[48px] flex-shrink-0 flex items-center justify-center rounded-[10px] border border-[#C3D4E9] border-opacity-40 bg-white cursor-pointer hover:bg-gray-50 text-[#596780]">
+                            <FilterIcon className="w-6 h-6" />
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- DESKTOP LAYOUT --- */}
+                <div className="hidden md:flex items-center justify-between gap-4 h-full">
                     {/* Logo */}
                     <Link to="/" className="flex-shrink-0 flex items-center" style={{ width: '148px', height: '44px' }}>
                         <span className="text-[32px] font-bold text-[#3563E9] leading-[150%] tracking-[-0.03em] font-['Plus_Jakarta_Sans']">MORENT</span>
                     </Link>
 
-                    {/* Search Bar - Hidden on small mobile, shown on md+ or handled specifically */}
-                    <div className="hidden md:flex flex-grow max-w-[492px] items-center mx-4">
+                    {/* Desktop Search Bar */}
+                    <div className="flex-grow max-w-[492px] items-center mx-4">
                         <form
                             onSubmit={handleSearch}
                             className="w-full flex items-center h-[44px] px-4 rounded-full border border-[#C3D4E9] border-opacity-40 focus-within:ring-1 focus-within:ring-[#3563E9] bg-white"
@@ -140,27 +211,6 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                </div>
-
-                {/* Mobile Search - Only visible on small screens */}
-                <div className="mt-5 md:hidden">
-                    <form
-                        onSubmit={handleSearch}
-                        className="flex items-center h-[48px] px-4 rounded-xl border border-[#C3D4E9] border-opacity-40 bg-white"
-                    >
-                        <SearchIcon className="w-5 h-5 text-[#596780] mr-3" />
-                        <input
-                            type="text"
-                            value={searchValue}
-                            onChange={(e) => {
-                                setSearchValue(e.target.value);
-                                if (e.target.value === '') setFilters({ search: '' });
-                            }}
-                            placeholder="Search something here"
-                            className="w-full bg-transparent border-none outline-none text-[#596780] text-sm font-medium placeholder-[#596780]"
-                        />
-                        <FilterIcon className="w-5 h-5 text-[#596780] ml-2" />
-                    </form>
                 </div>
             </div>
         </nav>
