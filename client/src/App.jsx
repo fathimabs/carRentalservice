@@ -17,7 +17,6 @@ import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
 import Checkout from "./pages/Checkout";
 
-
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Favourites from "./pages/Favourites";
 
@@ -40,6 +39,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/booking" element={<Booking />} />
               <Route path="/my-bookings" element={<MyBookings />} />
+
+              <Route path="/checkout/:id" element={<Checkout />} />
 
               {/* Car Features */}
               <Route path="/cars" element={<CarList />} />

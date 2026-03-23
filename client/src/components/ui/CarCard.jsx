@@ -68,6 +68,7 @@ const CarCard = ({ car }) => {
                     <PersonIcon className="w-4 h-4" />
                     <span className="text-xs font-medium">{car.capacity} People</span>
                 </div>
+
             </div>
 
             {/* Price + Button */}
@@ -82,14 +83,17 @@ const CarCard = ({ car }) => {
                     )}
                    
                 </div>
-                <Button
+
+                <button
                     onClick={handleRentNow}
                     variant="primary"
                     className="w-[116px] h-[44px] px-5 rounded-[4px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-white"
                 >
                     Rent Now
-                </Button>
+                </button>
+
             </div>
+
         </div>
     )
 }
