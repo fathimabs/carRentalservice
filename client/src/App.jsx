@@ -19,11 +19,12 @@ import Checkout from "./pages/Checkout";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Favourites from "./pages/Favourites";
+import SessionTimeoutHandler from "./components/common/SessionTimeoutHandler";
 
 function App() {
   return (
     <BrowserRouter>
-
+      <SessionTimeoutHandler />
       <CarProvider>
         <Routes>
 
