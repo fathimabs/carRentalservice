@@ -75,7 +75,7 @@ const Navbar = () => {
                                         </div>
                                         <button
                                             onClick={handleLogout}
-                                            className="block w-full text-left px-4 py-2 text-sm font-semibold text-red-600 hover:bg-gray-50 transition-colors"
+                                            className="block w-full text-left px-5 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
                                         >
                                             Log Out
                                         </button>
@@ -172,7 +172,7 @@ const Navbar = () => {
                                         </div>
                                         <button
                                             onClick={handleLogout}
-                                            className="block w-full text-left px-5 py-3 text-sm font-semibold text-red-600 hover:bg-gray-50 transition-colors"
+                                            className="block w-full text-left px-5 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
                                         >
                                             Log Out
                                         </button>
