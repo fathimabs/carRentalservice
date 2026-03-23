@@ -68,6 +68,7 @@ const CarCard = ({ car }) => {
                     <PersonIcon className="w-4 h-4" />
                     <span className="text-xs font-medium">{car.capacity} People</span>
                 </div>
+
             </div>
 
             {/* Price + Button */}
@@ -80,21 +81,19 @@ const CarCard = ({ car }) => {
                     {car.originalPrice && (
                         <p className="text-[#90A3BF] text-xs line-through">${car.originalPrice}.00</p>
                     )}
-                    {car.rating > 0 && (
-                        <div className="flex items-center gap-1 mt-1">
-                            {renderStars(car.rating)}
-                            <span className="text-[#90A3BF] text-xs">({car.reviewCount})</span>
-                        </div>
-                    )}
+                   
                 </div>
-                <Button
+
+                <button
                     onClick={handleRentNow}
                     variant="primary"
                     className="w-[116px] h-[44px] px-5 rounded-[4px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-white"
                 >
                     Rent Now
-                </Button>
+                </button>
+
             </div>
+
         </div>
     )
 }

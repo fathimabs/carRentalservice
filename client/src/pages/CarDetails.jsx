@@ -166,8 +166,9 @@ const CarDetails = () => {
                             </div>
                             <Button
                                 variant="primary"
-                                onClick={() => navigate(`/booking/${car._id}`)}
-                                disabled={!car.isAvailable}
+                                onClick={() =>
+                                    navigate(`/checkout/${car._id}`, { state: { car } })
+                                } disabled={!car.isAvailable}
                                 className="w-[116px] h-[44px] px-5 rounded-[4px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-white"
                             >
                                 Rent Now

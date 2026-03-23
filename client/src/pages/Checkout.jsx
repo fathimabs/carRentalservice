@@ -1,16 +1,59 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PickupDropoff from "../components/ui/PickupDropoff";
 
 function Checkout() {
 
+    const { state } = useLocation();
+    const car = state?.car;
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     const navigate = useNavigate();
-
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
     const handleRentNow = () => {
+        if (!car) {
+            alert("No car selected");
+            return;
+        }
+
+        const bookingData = {
+            car,
+
+            // form data
+            name: formData.name,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+
+            // pickup (direct state)
+            pickupLocation,
+            pickupDate,
+            pickupTime,
+
+            // dropoff (direct state)
+            dropoffLocation,
+            dropoffDate,
+            dropoffTime,
+
+            totalPrice: car.pricePerDay,
+        };
+
+        console.log("Booking Saved:", bookingData); // 🔍 DEBUG
+
+        const existing = JSON.parse(localStorage.getItem("bookings")) || [];
+
+        localStorage.setItem(
+            "bookings",
+            JSON.stringify([...existing, bookingData])
+        );
+
         navigate("/my-bookings");
     };
     const [paymentMethod, setPaymentMethod] = useState("card")
@@ -30,6 +73,19 @@ function Checkout() {
     const [dropoffDate, setDropoffDate] = useState("")
     const [dropoffTime, setDropoffTime] = useState("")
 
+
+    const [formData, setFormData] = useState({
+        name: "",
+        phone: "",
+        address: "",
+        city: "",
+        pickupLocation: "",
+        pickupDate: "",
+        pickupTime: "",
+        dropoffLocation: "",
+        dropoffDate: "",
+        dropoffTime: "",
+    });
     return (
         <div className="bg-[#F6F7F9] min-h-screen py-10 px-6">
 
@@ -59,6 +115,9 @@ function Checkout() {
                                 </label>
                                 <input
                                     type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     placeholder="Your name"
                                     className="w-full bg-[#F6F7F9] px-4 py-3 rounded-xl text-sm outline-none"
                                 />
@@ -71,6 +130,9 @@ function Checkout() {
                                 </label>
                                 <input
                                     type="text"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
                                     placeholder="Phone number"
                                     className="w-full bg-[#F6F7F9] px-4 py-3 rounded-xl text-sm outline-none"
                                 />
@@ -83,6 +145,9 @@ function Checkout() {
                                 </label>
                                 <input
                                     type="text"
+                                    name="address"
+                                    value={formData.address}
+                                    onChange={handleChange}
                                     placeholder="Address"
                                     className="w-full bg-[#F6F7F9] px-4 py-3 rounded-xl text-sm outline-none"
                                 />
@@ -95,6 +160,9 @@ function Checkout() {
                                 </label>
                                 <input
                                     type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
                                     placeholder="Town or city"
                                     className="w-full bg-[#F6F7F9] px-4 py-3 rounded-xl text-sm outline-none"
                                 />
@@ -406,10 +474,17 @@ function Checkout() {
                     </p>
 
                     <div className="flex gap-4 mb-4">
-                        <img src="/car.png" className="w-20" />
+                        <img
+                            src={car?.image}
+                            alt={car?.name}
+                            className="w-20 h-16 object-contain"
+                        />
+
                         <div>
-                            <p className="font-semibold">Nissan GT - R</p>
-                            <p className="text-sm text-[#90A3BF]">⭐⭐⭐⭐⭐ 440+ Reviewer</p>
+                            <p className="font-semibold">{car?.name}</p>
+                            <p className="text-sm text-[#90A3BF]">
+                                ⭐⭐⭐⭐⭐ {car?.reviewCount || 0}+ Reviewer
+                            </p>
                         </div>
                     </div>
 
@@ -417,7 +492,7 @@ function Checkout() {
 
                     <div className="flex justify-between text-sm mb-2">
                         <span>Subtotal</span>
-                        <span>$80.00</span>
+                        <span>${car?.pricePerDay}</span>
                     </div>
 
                     <div className="flex justify-between text-sm mb-4">
@@ -432,7 +507,7 @@ function Checkout() {
 
                     <div className="flex justify-between font-bold text-lg">
                         <span>Total Rental Price</span>
-                        <span>$80.00</span>
+                        <span>${car?.pricePerDay}</span>
                     </div>
 
                 </div>
