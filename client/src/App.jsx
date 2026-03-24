@@ -14,7 +14,6 @@ import { CarProvider } from "./context/CarContext";
 
 import Home from "./pages/Home";
 import Booking from "./pages/Booking";
-import MyBookings from "./pages/MyBookings";
 import Checkout from "./pages/Checkout";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -38,7 +37,7 @@ function App() {
               {/* Home + Booking */}
               <Route path="/" element={<Home />} />
               <Route path="/booking" element={<Booking />} />
-              <Route path="/my-bookings" element={<MyBookings />} />
+              
 
               <Route path="/checkout/:id" element={<Checkout />} />
 
