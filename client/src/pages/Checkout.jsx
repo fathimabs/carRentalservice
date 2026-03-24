@@ -89,11 +89,10 @@ function Checkout() {
     return (
         <div className="bg-[#F6F7F9] min-h-screen py-10 px-6">
 
-            <div className="max-w-7xl mx-auto grid lg:grid-cols-3 gap-6">
+            <div className="max-w-7xl  grid lg:grid-cols-3 gap-6">
 
                 {/* LEFT */}
-                <div className="lg:col-span-2 space-y-6">
-
+               <div className="order-2 lg:order-1 lg:col-span-2 space-y-6">
                     {/* Billing Info */}
                     <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB]">
 
@@ -466,50 +465,86 @@ function Checkout() {
 
 
                 {/* RIGHT */}
-                <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] h-fit">
+                <div className="order-1 lg:order-2 w-full flex justify-center lg:justify-end lg:pl-8">
+                 <div className="w-full max-w-[492px] lg:h-[560px] bg-white rounded-[10px] 
+border border-[#E5E7EB] p-6">
 
-                    <h2 className="text-[18px] font-semibold mb-2">Rental Summary</h2>
-                    <p className="text-sm text-[#90A3BF] mb-4">
-                        Prices may change depending on the rental
-                    </p>
-
-                    <div className="flex gap-4 mb-4">
-                        <img
-                            src={car?.image}
-                            alt={car?.name}
-                            className="w-20 h-16 object-contain"
-                        />
-
-                        <div>
-                            <p className="font-semibold">{car?.name}</p>
+                        {/* HEADER */}
+                        <div className="w-full h-[76px] flex flex-col gap-1 mb-6">
+                            <h2 className="text-[18px] font-semibold">Rental Summary</h2>
                             <p className="text-sm text-[#90A3BF]">
-                                ⭐⭐⭐⭐⭐ {car?.reviewCount || 0}+ Reviewer
+                                Prices may change depending on the rental
                             </p>
                         </div>
+
+                        {/* CAR */}
+                        <div className="flex gap-4 mb-6">
+
+                            {/* IMAGE */}
+                            <div className="w-[132px] h-[108px] bg-[#3563E9] rounded-[8px] flex items-center justify-center p-2">
+                                <img
+                                    src={car?.image}
+                                    alt=""
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+
+                            {/* DETAILS */}
+                            <div className="w-[220px] h-[72px] flex flex-col gap-2 justify-center">
+                                <p className="font-semibold text-[#1A202C]">
+                                    {car?.name}
+                                </p>
+                                <p className="text-sm text-[#90A3BF]">
+                                    ⭐⭐⭐⭐⭐ {car?.reviewCount || 0}+ Reviewer
+                                </p>
+                            </div>
+
+                        </div>
+
+                        {/* LINE */}
+                        <div className="w-full border-t border-[#E5E7EB] mb-6"></div>
+
+                        {/* SUBTOTAL */}
+
+                        <div className="w-full  h-[20px] flex justify-between mb-4">
+                            <span className="text-sm text-[#90A3BF]">Subtotal</span>
+                            <span className="text-sm text-[#1A202C] font-bold"> ${car?.pricePerDay}.00 </span> </div>
+
+                        {/* TAX */}
+                        <div className="w-full  h-[20px] flex justify-between mb-6">
+                            <span className="text-sm text-[#90A3BF] font-bold">Tax</span>
+                            <span className="text-sm text-[#1A202C] font-bold">$0</span>
+                        </div>
+
+                        {/* APPLY */}
+                        <div className="w-full  h-[48px] bg-[#F6F7F9] rounded-lg flex items-center justify-between px-4 mb-6">
+                            <span className="text-sm text-[#90A3BF]">Apply promo code</span>
+                            <span className="w-[100px] h-[24px] text-[16px] font-semibold leading-[150%] tracking-[-0.02em] text-right text-[#1A202C] cursor-pointer">
+                                Apply now
+                            </span>
+                        </div>
+
+                        {/* TOTAL */}
+                        <div className="w-full  h-[48px] flex justify-between items-center">
+
+                            {/* LEFT */}
+                            <div className="w-[284px] h-[48px] flex flex-col justify-center gap-1">
+                                <span className="w-[200px] h-[24px] text-sm font-semibold text-[#1A202C]">
+                                    Total Rental Price
+                                </span>
+                                <span className="text-xs text-[#90A3BF]">
+                                    Overall price includes rental discount
+                                </span>
+                            </div>
+
+                            {/* PRICE */}
+                            <span className="text-xl font-bold text-[#1A202C]">
+                                ${car?.pricePerDay}.00
+                            </span>
+
+                        </div>
+
                     </div>
-
-                    <hr className="mb-4" />
-
-                    <div className="flex justify-between text-sm mb-2">
-                        <span>Subtotal</span>
-                        <span>${car?.pricePerDay}</span>
-                    </div>
-
-                    <div className="flex justify-between text-sm mb-4">
-                        <span>Tax</span>
-                        <span>$0</span>
-                    </div>
-
-                    <div className="bg-[#F6F7F9] p-3 rounded-lg mb-4 flex justify-between text-sm">
-                        <span>Apply promo code</span>
-                        <span className="text-blue-600 cursor-pointer">Apply now</span>
-                    </div>
-
-                    <div className="flex justify-between font-bold text-lg">
-                        <span>Total Rental Price</span>
-                        <span>${car?.pricePerDay}</span>
-                    </div>
-
                 </div>
 
             </div>
