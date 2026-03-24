@@ -54,7 +54,7 @@ function Checkout() {
             JSON.stringify([...existing, bookingData])
         );
 
-        navigate("/my-bookings");
+        navigate("/cars");
     };
     const [paymentMethod, setPaymentMethod] = useState("card")
     const [isPickupActive, setIsPickupActive] = useState(true)
